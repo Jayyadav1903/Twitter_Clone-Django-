@@ -1,0 +1,22 @@
+<div class="tweet-actions-row">
+    <button class="action-btn" title="Reply">
+        <i data-lucide="message-circle"></i>
+        <span>2</span>
+    </button>
+    <button class="action-btn" title="Retweet">
+        <i data-lucide="repeat"></i>
+        <span>5</span>
+    </button>
+    <button class="action-btn" title="Like">
+        <i data-lucide="heart"></i>
+        <span>12</span>
+    </button>
+    {% if tweet.user == request.user %}
+        <a href="{% url 'tweet_edit' tweet.id %}" class="action-btn" title="Edit">
+            <i data-lucide="edit-3"></i>
+        </a>
+        <a href="{% url 'tweet_delete' tweet.id %}" class="action-btn delete" title="Delete">
+            <i data-lucide="trash-2"></i>
+        </a>
+    {% endif %}
+</div>

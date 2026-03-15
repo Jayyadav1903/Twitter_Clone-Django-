@@ -1,0 +1,15 @@
+<article class="tweet-card">
+    {% include "components/avatar.html" with user_obj=tweet.user %}
+    <div class="tweet-content">
+        <div class="tweet-header">
+            <span class="tweet-username">{{ tweet.user.username }}</span>
+            <span class="tweet-handle">@{{ tweet.user.username|lower }}</span>
+            <span class="tweet-handle">· 2h</span>
+        </div>
+        <p class="tweet-text">{{ tweet.text }}</p>
+        {% if tweet.photo %}
+        <img src="{{ tweet.photo.url }}" alt="Tweet photo" style="width: 100%; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--border-color);">
+        {% endif %}
+        {% include "components/tweet_actions.html" %}
+    </div>
+</article>

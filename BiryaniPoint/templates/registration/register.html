@@ -1,10 +1,22 @@
 {% extends "layout.html" %}
 
+{% block title %}Sign up / Twitter Clone{% endblock %}
+
 {% block content %}
-    <h2>Register Form</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form> 
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; padding: 24px;">
+    <i data-lucide="twitter" style="width: 48px; height: 48px; color: var(--accent-color); margin-bottom: 24px;"></i>
+    <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 32px; text-align: center;">Join Twitter Clone today</h2>
+    
+    <div style="width: 100%; max-width: 400px; background: var(--card-bg); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+        <form method="post" style="display: flex; flex-direction: column; gap: 16px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Sign up</button>
+        </form>
+        
+        <p style="margin-top: 24px; text-align: center; color: var(--text-secondary);">
+            Already have an account? <a href="{% url 'login' %}" style="color: var(--accent-color); font-weight: 500;">Log in</a>
+        </p>
+    </div>
+</div>
 {% endblock %}

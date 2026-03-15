@@ -1,0 +1,30 @@
+<nav class="nav-menu">
+    <a href="{% url 'tweet_list' %}" class="nav-item active">
+        <i data-lucide="home"></i>
+        <span>Home</span>
+    </a>
+    <a href="{% url 'search' %}" class="nav-item">
+        <i data-lucide="search"></i>
+        <span>Explore</span>
+    </a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'tweet_create' %}" class="nav-item">
+        <i data-lucide="feather"></i>
+        <span>Tweet</span>
+    </a>
+    <div style="flex-grow: 1;"></div>
+    <form method="POST" action="{% url 'logout' %}" style="display:inline; width:100%;">
+        {% csrf_token %}
+        <button type="submit" class="nav-item u-text-muted" style="width:100%; text-align:left;">
+            <i data-lucide="log-out"></i>
+            <span>Logout</span>
+        </button>
+    </form>
+    {% else %}
+    <div style="flex-grow: 1;"></div>
+    <a href="{% url 'login' %}" class="nav-item">
+        <i data-lucide="log-in"></i>
+        <span>Login</span>
+    </a>
+    {% endif %}
+</nav>

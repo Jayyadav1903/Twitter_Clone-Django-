@@ -1,24 +1,36 @@
 {% extends "layout.html" %}
 
-{% block title %}
-Biryani aur Django - Home
-{% endblock %}
+{% block title %}{% if form.instance.pk %}Edit Tweet{% else %}Post{% endif %} / Twitter Clone{% endblock %}
 
 {% block content %}
-<h1 class=" text-center mt-5">
-Welcome to Biryani aur Django!
-</h1>
-<h2> 
-    {% if form.instance.pk %}
-    Edit Tweet
-    {% else %}
-    Create Tweet
-    {% endif %}
-    <form method="post" enctype="multipart/form-data"class="form" >
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-warning">Save Tweet</button>
-        {% csrf_token %}
-    </form>
-    <a href="{% url 'tweet_list' %}">Back to Tweets</a>
- </h2>
+<div class="feed-header" style="padding: 16px; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); z-index: 10;">
+    <div style="display: flex; gap: 24px; align-items: center;">
+        <a href="{% url 'tweet_list' %}" class="btn-icon">
+            <i data-lucide="arrow-left"></i>
+        </a>
+        <h2 style="font-size: 20px; font-weight: 700;">
+            {% if form.instance.pk %}Edit Tweet{% else %}Post{% endif %}
+        </h2>
+    </div>
+</div>
+
+<div class="tweet-form-container" style="border: none; box-shadow: none; border-radius: 0; padding: 24px 16px; margin: 0;">
+    <div class="u-flex u-gap-3">
+        {% include "components/avatar.html" with user_obj=user %}
+        <div class="u-w-full">
+            <form method="post" enctype="multipart/form-data" class="u-flex" style="flex-direction: column; gap: 16px;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="u-flex u-justify-between u-items-center" style="border-top: 1px solid var(--border-color); padding-top: 16px;">
+                    <div class="u-flex u-gap-3" style="color: var(--accent-color);">
+                        <i data-lucide="image" style="cursor: pointer;"></i>
+                        <i data-lucide="smile" style="cursor: pointer;"></i>
+                        <i data-lucide="map-pin" style="cursor: pointer;"></i>
+                    </div>
+                    {% include "components/primary_button.html" with type="submit" text="Post" %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
