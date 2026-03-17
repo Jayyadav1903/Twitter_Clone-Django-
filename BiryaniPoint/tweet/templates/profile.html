@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>{{profile_user.username}}</h2>
+
+<div style="display:flex; gap:20px; margin-bottom:15px;">
+    <span><strong>{{ tweets_count }}</strong>Tweets</span>
+    <span><strong>{{ followers_count }}</strong>Followers</span>
+    <span><strong>{{ following_count }}</strong>Following</span>
+</div>
+
+
+{% if request.user != profile_user %}
+      
+    {% if is_following %}
+    <form method="post" action="{% url "unfollow_user" profile_user.id %}">
+        {% csrf_token %}
+        <button>
+            Unfollow
+        </button>
+    </form>
+
+    {% else %}
+    <form method="post" action="{% url "follow_user" profile_user.id %}">
+        {% csrf_token %}
+        <button>
+            Follow
+        </button>
+    </form>
+
+    {% endif %}
+      
+{% endif %}
+
+<hr>
+
+{% for tweet in tweets %}
+
+     {% include "components/tweet_card.html" with tweet=tweet %}
+
+{% endfor %}
+
+
+{% endblock %}

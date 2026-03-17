@@ -26,7 +26,8 @@
 
 <div class="feed-list" style="padding-top: 8px;">
     {% for tweet in tweets %}
-        {% include "components/tweet_card.html" %}
+        {% include "components/tweet_card.html" with tweet=tweet %}
+
     {% empty %}
         <div style="padding: 32px; text-align: center; color: var(--text-secondary);">
             <p>No tweets yet. Be the first to post!</p>

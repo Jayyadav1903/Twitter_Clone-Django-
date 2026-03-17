@@ -1,22 +1,75 @@
 <div class="tweet-actions-row">
-    <button class="action-btn" title="Reply">
-        <i data-lucide="message-circle"></i>
-        <span>2</span>
+
+    <!-- REPLY -->
+    <button class="action-btn"
+        onclick="document.getElementById('reply-box-{{ tweet.id }}').style.display='block'"
+        title="Reply"
+    >
+    <i data-lucide="message-circle"></i>
+    <span>{{ tweet.reply_count }}</span>
     </button>
-    <button class="action-btn" title="Retweet">
+
+    <!-- RETWEET -->
+    <form method="post" action="{% url 'toggle_retweet' tweet.id %}">
+    {% csrf_token %}
+    <button class="action-btn" title="Retweet" >
         <i data-lucide="repeat"></i>
-        <span>5</span>
+        <span>{{ tweet.retweet_count }}</span>
     </button>
-    <button class="action-btn" title="Like">
-        <i data-lucide="heart"></i>
-        <span>12</span>
-    </button>
+    </form>
+
+    <!-- LIKE -->
+    <form method="post" action="{% url "toggle_like" tweet.id %}" style="display:inline;">
+        {% csrf_token %}
+        <button class="action-btn" title="like">
+            <i data-lucide="heart"></i>
+            <span>{{ tweet.like_count }}</span>
+        </button>
+     </form>
+    
+    <!-- EDIT + DELETE -->
     {% if tweet.user == request.user %}
-        <a href="{% url 'tweet_edit' tweet.id %}" class="action-btn" title="Edit">
+            
+        <a href="{% url "tweet_edit" tweet.id %}" class="action-btn" title="Edit">
             <i data-lucide="edit-3"></i>
         </a>
+        
         <a href="{% url 'tweet_delete' tweet.id %}" class="action-btn delete" title="Delete">
             <i data-lucide="trash-2"></i>
         </a>
     {% endif %}
+  </div>
+
+<!-- REPLY FORM -->
+ 
+<div id="reply-box-{{ tweet.id }}" style="display:none; margin-top:10px;">
+
+    <form method="post" action="{% url "reply_tweet" tweet.id %}">
+        {% csrf_token %}
+
+        <input 
+        type="text"
+        name="text"
+        placeholder="Write a reply..."
+        style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border-color);"
+        >
+
+        <button type="submit" class='btn btn-primary' style='margin-top: 6px;'>
+            Reply
+        </button>
+    </form>
 </div>
+
+<!-- REPLIES -->
+ {% for reply in tweet.replies.all %}
+ 
+ <div style="margin-top:10px; padding-left:12px; border-left:2px solid var(--border-color);">
+
+    <strong>{{ reply.user.username }}</strong>
+
+    <div style="font-size:14px">
+        {{ reply.text }}
+    </div>
+ </div>
+
+ {% endfor %}
