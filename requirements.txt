@@ -17,3 +17,4 @@ tzdata==2025.3
 urllib3==2.6.3
 uv==0.10.4
 virtualenv==20.38.0
+pillow==10.4.0

@@ -1,15 +1,27 @@
+{% if tweet.parent %}
+    <div style="font-size: 12px; color: gray; margin-bottom: 4px;">
+        Replying to @{{ tweet.parent.user.username }}
+    </div>
+{% endif %}
 <article class="tweet-card">
+     <a href="{% url 'tweet_detail' tweet.id %}" style="text-decoration:none; color:inherit;">
+        ...
+    </a>
     {% include "components/avatar.html" with user_obj=tweet.user %}
     <div class="tweet-content">
         <div class="tweet-header">
-            <span class="tweet-username">{{ tweet.user.username }}</span>
+            <a href="{% url 'profile' tweet.user.id %}" class="tweet-username">
+    {{ tweet.user.username }}
+            </a> 
+
             <span class="tweet-handle">@{{ tweet.user.username|lower }}</span>
-            <span class="tweet-handle">· 2h</span>
+            <span class="tweet-handle">· {{ tweet.created_at|timesince }} ago
+            </span>
         </div>
         <p class="tweet-text">{{ tweet.text }}</p>
         {% if tweet.photo %}
         <img src="{{ tweet.photo.url }}" alt="Tweet photo" style="width: 100%; border-radius: var(--radius-md); margin-bottom: 12px; border: 1px solid var(--border-color);">
         {% endif %}
-        {% include "components/tweet_actions.html" %}
+        {% include "components/tweet_actions.html" with tweet=tweet %}
     </div>
 </article>
